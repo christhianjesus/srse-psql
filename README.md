@@ -11,7 +11,7 @@ se requerirán ciertos cambios. Se recomienda utilizar una versión
 anterior a la v9.2. Debido al cambio de comportamiento en la función xpath().
 
 En el archivo proc_firma.sql se encuentra un resumen de los pasos a seguir.
-Así como la separación de las preguntas y respuestas que se utilizaran
+Así como la separación de las preguntas y respuestas que se utilizarán
 posteriormente.
 
 # Fase MinHash
