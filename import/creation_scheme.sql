@@ -1,0 +1,99 @@
+DROP TABLE IF EXISTS Comments;
+DROP TABLE IF EXISTS Votes;
+DROP TABLE IF EXISTS PostTags;
+DROP TABLE IF EXISTS PostLinks;
+DROP TABLE IF EXISTS Badges;
+DROP TABLE IF EXISTS Tags;
+DROP TABLE IF EXISTS Posts;
+DROP TABLE IF EXISTS Users;
+
+CREATE TABLE Users (
+	Id INTEGER, --PRIMARY KEY
+	Reputation INTEGER,
+	CreationDate TIMESTAMP,
+	DisplayName TEXT,
+	LastAccessDate TIMESTAMP,
+    WebsiteUrl TEXT,
+	Location TEXT,
+	AboutMe TEXT,
+	Views INTEGER,
+	UpVotes INTEGER,
+	DownVotes INTEGER,
+	Age INTEGER,
+	AccountId INTEGER
+    );
+	
+CREATE TABLE Posts (
+    Id INTEGER, --PRIMARY KEY
+    PostTypeId INTEGER, -- 1 Question, 2 Answer. TODO: uses an ENUM type
+	AcceptedAnswerId INTEGER,
+	CreationDate TIMESTAMP,
+	Score INTEGER,
+	ViewCount INTEGER,
+	Body TEXT,
+	OwnerUserId INTEGER, --  REFERENCES Users(Id)
+	OwnerDisplayName TEXT,
+	LastEditorUserId INTEGER, -- REFERENCES Users(Id)
+	LastEditDate TIMESTAMP,
+	LastActivityDate TIMESTAMP,
+	Title TEXT,
+	AnswerCount INTEGER,
+	CommentCount INTEGER,
+	FavoriteCount INTEGER,
+	ClosedDate TIMESTAMP,
+	ParentId INTEGER,
+	CommunityOwnedDate TIMESTAMP
+    );
+	
+CREATE TABLE Tags (
+    Id INTEGER, --PRIMARY KEY
+    TagName TEXT -- UNIQUE
+	);
+	
+CREATE TABLE Badges (
+	Id INTEGER, --PRIMARY KEY
+	UserId INTEGER,
+	Name TEXT,
+	Date TIMESTAMP
+	);
+
+CREATE TABLE PostLinks (
+	Id INTEGER,
+	CreationDate TIMESTAMP,
+	PostId INTEGER, -- REFERENCES Posts(Id)
+	RelatedPostId INTEGER, -- REFERENCES Posts(Id)
+	LinkTypeId INTEGER
+)
+	
+CREATE TABLE PostTags (
+    Tag INTEGER, -- REFERENCES Tags(id)
+    Post INTEGER -- REFERENCES Posts(id)
+	);
+
+CREATE TABLE Votes (
+    Id INTEGER, --PRIMARY KEY
+	PostId INTEGER,
+	VoteTypeId INTEGER,  -- 2 UpMod, 3 DownMod, etc. TODO: uses an ENUM type
+	UserId INTEGER,
+	CreationDate TIMESTAMP
+	);
+
+CREATE TABLE Comments (
+    Id INTEGER,
+	PostId INTEGER,
+	Score INTEGER,
+	Text TEXT,
+	CreationDate TIMESTAMP,
+	UserId INTEGER
+    );
+
+-- Id INTEGER CONSTRAINT PK_Users PRIMARY KEY
+-- Id INTEGER CONSTRAINT PK_Badges PRIMARY KEY
+-- Id INTEGER CONSTRAINT PK_Tags PRIMARY KEY
+-- Id INTEGER CONSTRAINT PK_Posts PRIMARY KEY
+-- Id INTEGER CONSTRAINT PK_Votes PRIMARY KEY
+-- CONSTRAINT PK_PostTags PRIMARY KEY (Tag, Post)
+-- CONSTRAINT PK_PostCodes PRIMARY KEY (Post, Code)
+-- Id INTEGER CONSTRAINT PK_Comments PRIMARY KEY,
+-- Id INTEGER CONSTRAINT PK_PostLinks PRIMARY KEY
+-- TagName TEXT UNIQUE NOT NULL
